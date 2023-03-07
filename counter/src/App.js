@@ -1,28 +1,25 @@
-import './App.css';
-import Calculate from './hooks/Calculate';
+import "./App.css";
+import Calculate from "./hooks/Calculate";
+import { createContext, useContext } from "react";
+import Counter from "./components/Counter";
 
-const Counter = () => {
-  const {counter, onClickAdd, onClickSubtract} = Calculate();
-  return (
-    <div>
-      {counter}
-      <div>
-        <button onClick={onClickAdd}>+</button>
-        <button onClick={onClickSubtract}>-</button>
-      </div>
-    </div>
-  )
-}
-
+// Création du contexte
+export const Context = createContext();
 
 function App() {
-
+  const { counter, onClickAdd, onClickSubtract } = Calculate();
   return (
-    <div className="App">
-      <header className="App-header">
-      <Counter />
-      </header>
-    </div>
+    // fournisseur du contexte
+    <Context.Provider value={[counter, onClickAdd, onClickSubtract]}>
+      <div className="App">
+        <header className="App-header">
+          <Counter />
+        </header>
+        <main>
+          <h1>{counter}</h1>
+        </main>
+      </div>
+    </Context.Provider>
   );
 }
 
