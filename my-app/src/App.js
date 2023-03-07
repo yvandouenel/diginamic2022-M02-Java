@@ -3,17 +3,8 @@ import './App.css';
 import AppLink from './components/AppLink';
 import { useState, useEffect } from 'react';
 
-function Counter({ count, increment }) {
-  return (
-    <div>
-      <p>Vous avez cliqué {count} times</p>
-      <button
-        style={{ margin: "20px" }}
-        onClick={() => { increment(count => count + 1) }}
-      >Clic</button>
-    </div>
-  )
-}
+import Counter from "./components/Counter";
+
 const Result = ({ result }) => <h1>{result}</h1>;
 
 function App() {
@@ -28,7 +19,8 @@ function App() {
 
   useEffect(() => {
     document.title = `Liens en ${linkColor}`
-  })
+    console.log(`Dans useEffect avec dépendance sur count2`);
+  },[count2])
   return (
     <div className="App">
       <header className="App-header">
