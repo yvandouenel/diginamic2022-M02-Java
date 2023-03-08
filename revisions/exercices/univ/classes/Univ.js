@@ -6,7 +6,7 @@ class Univ {
     this.render();
   }
   render() {
-    const section_elt = this.createDomElement("section", "", document.querySelector("#univs"), []);
+    const section_elt = this.createDomElement("section", "", document.querySelector("#univs"), [["class", "col-3 border rounded p-2 m-2"]]);
     const name_elt = this.createDomElement("h2", this.name, section_elt, []);
     const link_elt = this.createDomElement("a", "Voir le site web", section_elt, [["href", this.url]]);
   }
