@@ -180,7 +180,8 @@ class Coopernet {
    * @param order
    * @return {Promise<void>}
    */
-  static updateTask = async (task, order) => {
+  static updateTask = async (task, order = 0) => {
+    console.log(`dans updateTask `, task, order);
     await fetch(this.url + "/api/task/" + task.id, {
       method: "PATCH",
       body: JSON.stringify({
