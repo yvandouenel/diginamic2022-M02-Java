@@ -1,7 +1,9 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import Coopernet from "../services/Coopernet"
+import Coopernet from "../services/Coopernet";
+import Task from "./Task";
 function App() {
+  const [tasks, setTasks] = useState([]);
   useEffect(()=>{
     // Vérification de la connexion
     const testLocalStorageToken = async () => {
@@ -15,8 +17,8 @@ function App() {
           // Je modifie le login et le mot de passe
           // Il faudra faire en sorte d'appeler ici le component de formulaire
           // de login
-          Coopernet.setUsername("y");
-          Coopernet.setPassword("y");
+          Coopernet.setUsername("yd");
+          Coopernet.setPassword("yd");
           await Coopernet.setOAuthToken();
           // Si ce code est exécuté, c'est que je suis bien connecté
           console.log(
@@ -40,11 +42,21 @@ function App() {
     console.log(`tasks récupérées sur le serveur : `, server_tasks);
 
     // Modification du state tasks
-    //setTasks(server_tasks);
+    setTasks(server_tasks);
   };
+  const handleClickDisconnect = (e) => {
+    e.preventDefault();
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+    }
+    Coopernet.oauth = {};
+  }
   return (
-    <div className="App">
-      <h1>Liste des tâches</h1>
+    <div className="App container">
+      <h1>Liste des tâches</h1> 
+      {tasks.map((task)=> <Task key={task.id} label={task.label} />)}
+      <button
+      onClick={handleClickDisconnect}>Se déconnecter</button>
     </div>
   );
 }
