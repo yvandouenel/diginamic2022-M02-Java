@@ -27,9 +27,6 @@ function App() {
           /*  Coopernet.setUsername("yd");
            Coopernet.setPassword("yd"); 
            await Coopernet.setOAuthToken();*/
-          
-          // Récupération des tâches :
-          await fetchTask();// Récupération de la liste des tâches pour l'utilisateur y y
         }
       } catch (error) {
         // Ici, il faudrait afficher dans l'interface qu'il y a eu une erreur
@@ -67,7 +64,15 @@ function App() {
       localStorage.removeItem('token');
     }
     Coopernet.oauth = {};
+    setIsLogged(false);
   }
+const handleClickdelete = (id) => {
+  console.log(`Dans handleClickdelete, `, id);
+  if(window.confirm("Etes-vous sûr.e de vouloir supprimer cette tâche ?")) {
+    setTasks(tasks.filter((task) => task.id !== id));
+    Coopernet.deleteTask(id);
+  }
+}
   const handleSubmitAddTask = (e) => {
     e.preventDefault();
     console.log(inputRef.current.value);
@@ -87,21 +92,50 @@ function App() {
     inputRef.current.value = null;
     Coopernet.addTask(new_task, 1);
   }
+  const handleSubmitLogin = async (e) => {
+    e.preventDefault();
+    const login = e.target.login.value;
+    const pwd = e.target.pwd.value;
+    console.log(`dans handleSubmitLogin`, login, pwd);
+    Coopernet.setUsername(login);
+    Coopernet.setPassword(pwd);
+    await Coopernet.setOAuthToken();
+    console.log(`oauth`, Coopernet.oauth);
+    if (Coopernet.getIdenfication()) setIsLogged(true);
+    else {
+      e.target.login.value = "";
+      e.target.pwd.value = ""
+    }
+
+    // Si j'execute cette instruction, c'est que la promesse a été tenue
+    // Il faut maintenant que j'affiche les résultats et que je cache le formulaire de login
+
+  }
+
   return (
     <div className="App container">
 
       {isLogged ? (
-      <>
-      <div className='d-flex justify-content-between align-items-center'>
-        <h1>Liste des tâches</h1>
-        <button className='btn btn-warning '
-          onClick={handleClickDisconnect}>Se déconnecter
-        </button>
-      </div>
-        <FormAddTask inputRef={inputRef} onSubmitAddTask={handleSubmitAddTask} />
-        {tasks.map((task) => <Task key={task.id} task={task} label={task.label} onClickValidate={handleClickValidate} />)}
-      </>
-      ) : (<FormLogin />)}
+        <>
+          <div className='d-flex justify-content-between align-items-center'>
+            <h1>Liste des tâches</h1>
+            <button className='btn btn-warning '
+              onClick={handleClickDisconnect}>Se déconnecter
+            </button>
+          </div>
+          <FormAddTask inputRef={inputRef} onSubmitAddTask={handleSubmitAddTask} />
+          {tasks.sort((previous, next) => {
+            previous.isValidate = typeof (+previous.isValidate) == 'number' ? +previous.isValidate : 0;
+            next.isValidate = typeof (+next.isValidate) == 'number' ? +next.isValidate : 0;
+            return +previous.isValidate - +next.isValidate
+          }).map((task) => <Task
+            key={task.id} task={task}
+            label={task.label}
+            onClickValidate={handleClickValidate} 
+            onClickdelete={handleClickdelete} 
+            />)}
+        </>
+      ) : (<FormLogin onSubmitLogin={handleSubmitLogin} />)}
     </div>
   );
 }

@@ -27,7 +27,13 @@ class Coopernet {
   static setPassword = (password) => {
     this.password = password;
   };
-
+  /**
+   * Vérifie si l'oject oauth n'est pas vide
+   * @returns boolean
+   */
+static getIdenfication = () => {
+  return Object.keys(Coopernet.oauth).length !== 0;
+}
   /**
    * Prépare le payload pour la demande d'authentification
    * @param {boolean} refresh
