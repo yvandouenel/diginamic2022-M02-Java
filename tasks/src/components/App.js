@@ -20,8 +20,8 @@ function App() {
           // Je modifie le login et le mot de passe
           // Il faudra faire en sorte d'appeler ici le component de formulaire
           // de login
-          Coopernet.setUsername("yd");
-          Coopernet.setPassword("yd");
+         /*  Coopernet.setUsername("yd");
+          Coopernet.setPassword("yd"); */
           await Coopernet.setOAuthToken();
           // Si ce code est exécuté, c'est que je suis bien connecté
           console.log(
@@ -88,11 +88,15 @@ function App() {
   }
   return (
     <div className="App container">
-      <h1>Liste des tâches</h1>
+      <div className='d-flex justify-content-between align-items-center'>
+        <h1>Liste des tâches</h1>
+        <button className='btn btn-warning '
+          onClick={handleClickDisconnect}>Se déconnecter
+          </button>
+      </div>
       <FormAddTask inputRef={inputRef} onSubmitAddTask={handleSubmitAddTask} />
       {tasks.map((task) => <Task key={task.id} task={task} label={task.label} onClickValidate={handleClickValidate} />)}
-      <button
-        onClick={handleClickDisconnect}>Se déconnecter</button>
+      
     </div>
   );
 }
