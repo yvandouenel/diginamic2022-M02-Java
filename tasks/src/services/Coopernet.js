@@ -156,6 +156,7 @@ class Coopernet {
    * @return {Promise<void>}
    */
   static addTask = async (task, order) => {
+    console.log(`DAns addTask `, task, order);
     const response = await fetch(this.url + "/api/add/task", {
       method: "POST",
       body: JSON.stringify({

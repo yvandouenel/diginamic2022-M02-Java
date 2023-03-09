@@ -84,6 +84,7 @@ function App() {
     setTasks([...tasks, new_task]);
     // Reset de la value du formulaire
     inputRef.current.value = null;
+    Coopernet.addTask(new_task, 1);
   }
   return (
     <div className="App container">
