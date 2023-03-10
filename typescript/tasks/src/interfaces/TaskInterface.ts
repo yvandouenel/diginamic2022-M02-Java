@@ -5,3 +5,7 @@ export interface TaskInterface {
   order: number,
   uid: number
 }
+export interface propsTaskInterface  extends TaskInterface{
+  onClickValidate: (index:number) => void;
+  index: number
+}
