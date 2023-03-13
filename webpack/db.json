@@ -79,6 +79,15 @@
       "title": "Planche à voile",
       "author": "Raymonde",
       "id": 16
+    },
+    {
+      "title": "Planche à voile",
+      "author": "Raymonde",
+      "id": 17
     }
+  ],
+  "users": [
+    { "id": 1, "name": "toto" },
+    { "id": 2, "name": "jiji" }
   ]
 }

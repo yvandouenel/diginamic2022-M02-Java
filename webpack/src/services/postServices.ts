@@ -22,6 +22,12 @@ export function addPost() {
       method: "POST",
       body: JSON.stringify({ "title": "Planche à voile", "author": "Raymonde" })
     })
-    .then(function (res) { console.log(res.status) })
+    .then(function (res) { 
+      console.log(res.status);
+      return res.json();
+     })
+     .then(data => {
+      console.log(`data récupérée :`, data);
+     })
     .catch(function (res) { console.log(res) })
 }
