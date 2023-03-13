@@ -1,0 +1,7 @@
+{
+  "posts": [
+    { "id": 1, "title": "Webpack", "author": "Bob" },
+    { "id": 2, "title": "Typescript", "author": "Josianne" },
+    { "id": 3, "title": "json-server", "author": "Simon" }
+  ]
+}
